@@ -1,0 +1,625 @@
+/* ============================================
+   TATE — основные стили
+   ============================================ */
+
+/* Сброс и бокс-модель */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Страница: отступы, шрифт, фон */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  color: #000;
+  background: #fff;
+  line-height: 1.4;
+}
+
+/* Ссылки: без подчёркивания, цвет как у родителя */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Картинки: по ширине контейнера, cover */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* Анимация появления снизу вверх */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Шапка (если используется отдельный .header) --- */
+.header {
+  display: flex;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  background: #fff;
+  animation: fadeInUp 0.6s ease-out 0.15s forwards;
+}
+
+.header-frame {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 2.5px solid #000;
+  --header-hover-scale: 1.15;
+}
+
+.logo {
+  margin: 0;
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+.logo a {
+  font-weight: inherit;
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.logo a:hover {
+  transform: scale(var(--header-hover-scale));
+}
+
+.nav-icons {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.icon-link,
+.menu-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.header .icon-link svg,
+.header .menu-btn svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  transition: transform 0.2s ease;
+}
+
+.icon-link:hover,
+.menu-btn:hover {
+  opacity: 0.9;
+}
+
+.header .icon-link:hover svg,
+.header .menu-btn:hover svg {
+  transform: scale(var(--header-hover-scale));
+}
+
+/* ============================================
+   ГЛАВНАЯ СТРАНИЦА (index.html) — Hero
+   ============================================ */
+
+/* Блок hero: ширина, анимация появления */
+.hero {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  animation: heroFadeIn 0.6s ease-out 0.15s forwards;
+  opacity: 0;
+}
+
+@keyframes heroFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Обёртка области с главным фото (высота 100vh) */
+.hero-image-wrap {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 280px;
+  overflow: hidden;
+  background: #f5f5f5;
+  margin: 0;
+  padding: 0;
+}
+
+/* Прямоугольник с названием «tate» и иконками (поиск, избранное, корзина, меню) */
+.hero-top-frame {
+  position: absolute;
+  top: 1.25rem;
+  left: 1.5rem;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.6rem 2rem;
+  border: 1.5px solid #fff;
+  background: transparent;
+  color: #fff;
+  mix-blend-mode: difference;
+  --header-hover-scale: 1.15;
+}
+
+.hero-top-frame .logo,
+.hero-top-frame .logo a,
+.hero-top-frame .icon-link,
+.hero-top-frame .menu-btn {
+  color: inherit;
+}
+
+.hero-top-frame .icon-link svg,
+.hero-top-frame .menu-btn svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  transition: transform 0.2s ease;
+  stroke: currentColor;
+}
+
+/* Отступ между логотипом и иконками справа */
+.hero-top-frame .nav-icons {
+  margin-left: 3cm;
+}
+
+.hero-top-frame .logo a:hover,
+.hero-top-frame .icon-link:hover svg,
+.hero-top-frame .menu-btn:hover svg {
+  transform: scale(var(--header-hover-scale));
+}
+
+/* Зона «перетащите фото / выберите файл» на главной (когда нет hero.jpg) */
+.hero-drop {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: #f0f0f0;
+  border: 2px dashed #999;
+  padding: 2rem;
+  text-align: center;
+  z-index: 2;
+}
+
+.hero-drop--visible {
+  display: flex;
+}
+
+.hero-drop--drag {
+  border-color: #000;
+  background: #e8e8e8;
+}
+
+/* Текст и кнопка в зоне загрузки hero */
+.hero-drop p {
+  margin: 0;
+  color: #333;
+  font-size: 1rem;
+}
+
+.hero-drop button {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.4rem 0.8rem;
+  background: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.hero-drop button:hover {
+  background: #333;
+}
+
+/* Главное фото на первой странице */
+.hero-image {
+  width: 100%;
+  height: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  display: block;
+}
+
+/* Подписи-ссылки «Menswear» и «Womenswear» внизу hero */
+.hero-label {
+  position: absolute;
+  bottom: calc(5.5rem + 0.5cm);
+  font-size: 1.10rem;
+  font-weight: 600;
+  color: #fff;
+  mix-blend-mode: difference;
+  letter-spacing: 0.02em;
+  transition: transform 0.2s ease;
+  display: inline-block;
+}
+
+.hero-label:hover {
+  transform: scale(1.15);
+}
+
+/* Ссылка «Menswear» слева */
+.hero-label--mens {
+  left: 34%;
+  transform: translateX(-50%);
+}
+
+.hero-label--mens:hover {
+  transform: translateX(-50%) scale(1.15);
+}
+
+/* Ссылка «Womenswear» справа */
+.hero-label--womens {
+  left: 66%;
+  transform: translateX(-50%);
+}
+
+.hero-label--womens:hover {
+  transform: translateX(-50%) scale(1.15);
+}
+
+/* Контент страницы (вспомогательный блок) */
+.page-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: #f5f5f5;
+}
+
+.page-content h2 {
+  margin: 0 0 1rem;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.page-content p {
+  margin: 0;
+}
+
+.page-content a {
+  color: #000;
+  text-decoration: underline;
+}
+
+.page-content a:hover {
+  opacity: 0.8;
+}
+
+/* ============================================
+   СТРАНИЦА MENSWEAR (menswear.html) — сетка плашек
+   ============================================ */
+
+/* Контейнер страницы Menswear (шапка + сетка) */
+.hero--with-grid {
+  position: relative;
+}
+
+/* Шапка «tate» + иконки на странице Menswear */
+.hero--with-grid .hero-top-frame {
+  position: absolute;
+  top: 1.25rem;
+  left: 1.5rem;
+  z-index: 10;
+}
+
+/* Сетка: верхняя плашка 80vh, строка надписей 40px, нижний ряд 58vh */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 80vh 40px 58vh;
+  column-gap: 3px;
+  row-gap: 0.15rem;
+  width: 100%;
+  min-height: 100vh;
+  background: #fff;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+}
+
+/* Размещение карточек и блока надписей в сетке */
+.product-grid .product-card:nth-child(1) { grid-column: 1 / -1; grid-row: 1; }
+.product-grid .product-card:nth-child(2) { grid-column: 1; grid-row: 3; }
+.product-grid .product-card:nth-child(3) { grid-column: 2; grid-row: 3; }
+.product-grid .product-card:nth-child(4) { grid-column: 3; grid-row: 3; }
+.product-grid .product-card:nth-child(5) { grid-column: 4; grid-row: 3; }
+
+/* Обёртка надписей «New» в зазоре между рядами плашек */
+.product-grid__gap-labels {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 2mm;
+  min-height: 100%;
+  overflow: visible;
+  padding-top: 2px;
+  margin-top: -1px;
+}
+
+/* Одна надпись «New»: размер, отступ слева, сдвиг вверх */
+.product-grid__gap-label {
+  display: block;
+  line-height: 1.3;
+  padding-left: calc(1rem - 2.5mm);
+  margin-top: 1mm;
+  font-size: 0.6rem;
+  font-weight: 300;
+  color: #000;
+  flex-shrink: 0;
+}
+
+/* Вторая надпись «New» (ниже первой, без доп. отступа) */
+.product-grid__gap-label--lower {
+  margin-top: -0.6mm;
+  font-size: 0.6rem;
+}
+
+/* Третья и четвёртая надписи — сдвиг вправо на 3 см */
+.product-grid__gap-label:nth-child(3),
+.product-grid__gap-label:nth-child(4) {
+  margin-top: -25px;
+  margin-left: 3cm;
+}
+
+/* Верхняя плашка: статичная 80% экрана, картинка прижата к верху */
+.product-grid .product-card:first-child {
+  grid-column: 1 / -1;
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+}
+
+.product-grid .product-card:first-child .product-card__image--fit {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  display: block;
+  object-fit: cover;
+  object-position: top center;
+  background: #e0e0e0;
+}
+
+.product-grid .product-card:first-child .product-card__image:not(.product-card__image--fit) {
+  height: 100%;
+  min-height: 0;
+  aspect-ratio: unset;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Карточка товара (плашка): ссылка-блок, фон, при наведении затемнение */
+.product-card {
+  display: block;
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+  background: #e8e8e8;
+  transition: opacity 0.2s ease;
+  border: none;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.product-card:hover {
+  opacity: 0.92;
+}
+
+/* Зона «добавить фото» внутри плашки (не используется на текущем Menswear) */
+.product-drop {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: #f0f0f0;
+  border: 2px dashed #999;
+  padding: 1rem;
+  text-align: center;
+  z-index: 2;
+}
+
+.product-drop--visible {
+  display: flex;
+}
+
+.product-drop--drag {
+  border-color: #000;
+  background: #e8e8e8;
+}
+
+.product-drop p {
+  margin: 0;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.product-drop .product-choose {
+  font-family: inherit;
+  font-size: 0.9rem;
+  padding: 0.4rem 0.8rem;
+  background: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.product-drop .product-choose:hover {
+  background: #333;
+}
+
+/* Блок с фоном-картинкой внутри плашки */
+.product-card__image {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background: #e0e0e0;
+  background-size: cover;
+  background-position: center;
+  display: block;
+}
+
+/* Нижние плашки: картинка на всю высоту ячейки */
+.product-grid .product-card:not(:first-child) {
+  min-height: 0;
+}
+
+.product-grid .product-card:not(:first-child) .product-card__image {
+  height: 100%;
+  min-height: 0;
+  aspect-ratio: unset;
+}
+
+/* ============================================
+   АДАПТИВ: планшет и мобильные
+   ============================================ */
+
+/* Планшет: 2 колонки, 4 ряда (верхняя плашка + надписи + 2 ряда по 2 карточки) */
+@media (max-width: 900px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 80vh 40px 58vh 58vh;
+    row-gap: 0.15rem;
+  }
+  .product-grid .product-card:nth-child(1) { grid-column: 1 / -1; grid-row: 1; }
+  .product-grid__gap-labels { grid-column: 1 / -1; grid-row: 2; }
+  .product-grid .product-card:nth-child(2) { grid-column: 1; grid-row: 3; }
+  .product-grid .product-card:nth-child(3) { grid-column: 2; grid-row: 3; }
+  .product-grid .product-card:nth-child(4) { grid-column: 1; grid-row: 4; }
+  .product-grid .product-card:nth-child(5) { grid-column: 2; grid-row: 4; }
+}
+
+/* Телефон: шапка с равными отступами, первая плашка скрыта, 2 колонки */
+@media (max-width: 768px) {
+  /* Шапка «tate» + иконки: отступы 1rem со всех сторон, растянута между left и right */
+  .hero-top-frame,
+  .hero--with-grid .hero-top-frame {
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+    width: auto;
+    padding: 0.45rem 1rem;
+    box-sizing: border-box;
+  }
+  .hero-top-frame .nav-icons {
+    margin-left: auto;
+  }
+  .hero-image-wrap {
+    min-height: 100vh;
+  }
+  .hero-image {
+    object-position: center top;
+  }
+  /* На Menswear верхняя большая плашка не показывается */
+  .hero--with-grid .product-grid .product-card:first-child {
+    display: none;
+  }
+  /* Надписи скрыты, только карточки; зазоры 3px по вертикали и горизонтали */
+  .hero--with-grid .product-grid__gap-labels {
+    display: none;
+  }
+  .hero--with-grid .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 58vh 58vh;
+    column-gap: 3px;
+    row-gap: 3px;
+  }
+  .hero--with-grid .product-grid .product-card:nth-child(2) { grid-column: 1; grid-row: 1; }
+  .hero--with-grid .product-grid .product-card:nth-child(3) { grid-column: 2; grid-row: 1; }
+  .hero--with-grid .product-grid .product-card:nth-child(4) { grid-column: 1; grid-row: 2; }
+  .hero--with-grid .product-grid .product-card:nth-child(5) { grid-column: 2; grid-row: 2; }
+}
+
+/* Узкий телефон: те же отступы шапки, подписи Menswear/Womenswear мельче */
+@media (max-width: 600px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: 58vh 58vh 58vh 58vh;
+  }
+  .hero--with-grid .product-grid .product-card:first-child {
+    display: none;
+  }
+  .hero--with-grid .product-grid__gap-labels {
+    display: none;
+  }
+  .hero--with-grid .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 58vh 58vh;
+    column-gap: 3px;
+    row-gap: 3px;
+  }
+  .hero--with-grid .product-grid .product-card:nth-child(2) { grid-column: 1; grid-row: 1; }
+  .hero--with-grid .product-grid .product-card:nth-child(3) { grid-column: 2; grid-row: 1; }
+  .hero--with-grid .product-grid .product-card:nth-child(4) { grid-column: 1; grid-row: 2; }
+  .hero--with-grid .product-grid .product-card:nth-child(5) { grid-column: 2; grid-row: 2; }
+  /* Шапка: как на 768px — 1rem со всех сторон */
+  .hero-top-frame,
+  .hero--with-grid .hero-top-frame {
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+    width: auto;
+    padding: 0.45rem 1rem;
+    box-sizing: border-box;
+  }
+  .hero-label {
+    font-size: 0.9rem;
+    bottom: calc(3.5rem + 0.5cm);
+  }
+  .hero-label--mens {
+    left: 34%;
+    transform: translateX(-50%);
+  }
+  .hero-label--mens:hover {
+    transform: translateX(-50%) scale(1.15);
+  }
+  .hero-label--womens {
+    left: 66%;
+    transform: translateX(-50%);
+  }
+  .hero-label--womens:hover {
+    transform: translateX(-50%) scale(1.15);
+  }
+}
